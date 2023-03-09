@@ -14,18 +14,18 @@ def read_root():
 
 @app.get("/texts/{text}")
 async def text_statistics(text: str  = Path(min_length=2, max_length=10,\
-											default='Сделал бы кривую ценности')):
+		default='Сделал бы кривую ценности')):
     return {"len_text": len(text)}
     
 
 @app.post("/text", response_description="Psychotyping by text",\
 		 description="Calculate statisctics by text using text of quantiles")
 async def text_statistics(avg_type: str = Body(min_length=7, max_length=15,\
-										 default='assessty_all', title='Type of quantiles',\
-										 description='Choose one type from \
-										 			[\"assessty_all\", \"assessty_short\"]'),\
-										 text: str  = Body(min_length=5, default=default_text, \
-										 				title='Text')):
+		default='assessty_all', title='Type of quantiles',\
+		description='Choose one type from \
+					[\"assessty_all\", \"assessty_short\"]'),\
+		text: str  = Body(min_length=5, default=default_text, \
+						title='Text')):
     if avg_type not in ["assessty_all", "assessty_short"]:
     	raise HTTPException(404, "avg_type is incorrect!")
     dict_response = {"len_text": len(text), "avg_type": avg_type}
@@ -35,11 +35,11 @@ async def text_statistics(avg_type: str = Body(min_length=7, max_length=15,\
 @app.post("/dialogue", response_description="Psychotyping of client",\
 		 description="Calculate statisctics by text using dialog-quantiles")
 async def dialogue_statistics(avg_type: str = Body(min_length=7, max_length=15, default='dialogs',\
-												title='Type of quantiles',\
-											 description='Choose one type from \
-											 [\"dialogs\"]'),\
-											 text: str  = Body(min_length=5, default=default_dialog,\
-											  				title='Text')):
+		title='Type of quantiles',\
+		description='Choose one type from \
+		[\"dialogs\"]'),\
+		text: str  = Body(min_length=5, default=default_dialog,\
+						title='Text')):
     if avg_type not in ["dialogs"]:
     	raise HTTPException(404, "avg_type is incorrect!")
     dict_response = {"len_text": len(text), "avg_type": avg_type}
